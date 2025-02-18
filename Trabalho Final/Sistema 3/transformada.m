@@ -1,5 +1,13 @@
+% Limpar variáveis e console
+clear; clc; close all;
+
 % Carregar o arquivo de áudio
-[y, Fs] = audioread('sistema3.wav');  % Carregar o arquivo de áudio
+arquivo = 'sistema3.wav'; % Nome do arquivo de áudio
+if exist(arquivo, 'file') % Verifica se o arquivo existe
+    [y, Fs] = audioread(arquivo);
+else
+    error('Arquivo de áudio não encontrado: %s', arquivo);
+end
 
 % Se o áudio tiver 2 canais, converter para mono
 if size(y, 2) > 1
@@ -12,33 +20,36 @@ end
 % Determinar o envelope suavizado com o método RMS
 [superior_rms, inferior_rms] = envelope(y, 150, 'rms');  % Envelope suavizado
 
-% Gerar a figura com os três gráficos
+% Criar a figura
 figure;
 
 % Sinal Original
 subplot(3, 1, 1);
-plot((1:length(y)) / Fs, y, 'b');  % Sinal original em azul
-title('Sistema 3 - Sinal Original');  % Título mais descritivo
-legend('Sinal original');
+plot((1:length(y)) / Fs, y, 'b');  
+title('Sistema 1 - Sinal Original');  
+legend({'Sinal original'}, 'Location', 'northoutside'); % Legenda acima do gráfico
 xlabel('Tempo (s)');
 ylabel('Amplitude');
-grid on;  % Ativar o grid
+grid on;  
 
 % Envelope Superior e Inferior
 subplot(3, 1, 2);
-plot((1:length(y)) / Fs, superior, 'k', (1:length(y)) / Fs, inferior, 'k');  % Envelope superior e inferior em preto
-legend('Envelope Superior', 'Envelope Inferior');
+plot((1:length(y)) / Fs, superior, 'k', (1:length(y)) / Fs, inferior, 'k');  
+legend({'Envelope Superior', 'Envelope Inferior'}, 'Location', 'northoutside'); % Legenda acima do gráfico
 xlabel('Tempo (s)');
 ylabel('Amplitude');
-grid on;  % Ativar o grid
+grid on;  
 
 % Envelope Suavizado (RMS)
 subplot(3, 1, 3);
-plot((1:length(y)) / Fs, superior_rms, 'm', (1:length(y)) / Fs, -superior_rms, 'm');  % Envelope suavizado em rosa
-legend('Envelope Suavizado (RMS)');
+plot((1:length(y)) / Fs, superior_rms, 'm', (1:length(y)) / Fs, -superior_rms, 'm');  
+legend({'Envelope Suavizado (RMS)'}, 'Location', 'northoutside'); % Legenda acima do gráfico
 xlabel('Tempo (s)');
 ylabel('Amplitude');
-grid on;  % Ativar o grid
+grid on;  
 
-% Salvar a figura em formato JPG
-saveas(gcf, 'transhilbert3.jpg');  % Salva a figura como 'transhilbert.jpg'
+% Ajustar o tamanho da figura para evitar sobreposição
+set(gcf, 'Position', [100, 100, 900, 700]); % Ajusta o tamanho da janela da figura
+
+% Salvar a figura corrigida
+saveas(gcf, 'transhilbert_corrigido.jpg');  % Salva a figura como JPG

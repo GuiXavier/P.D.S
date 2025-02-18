@@ -19,7 +19,7 @@ c = colorbar;  % Adicionar barra de cores
 ylabel(c, 'Potência/Frequência (dB/Hz)');  % Adicionar rótulo à barra de cores
 
 % Configuração dos eixos e título
-title('Espectrograma Sistema 1');  % Título em português
+title('Espectrograma Sistema 3');  % Título em português
 xlabel('Tempo (s)');  % Rótulo do eixo x
 ylabel('Frequência (Hz)');  % Rótulo do eixo y
 
